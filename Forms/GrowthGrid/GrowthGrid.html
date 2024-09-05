@@ -1,0 +1,52 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="GridStyles.css">
+    <title>hello</title>
+</head>
+<body>
+    <div class="Nav" id="Nav">
+        <div class="Logo-Container">
+            <img src="../../Imgs/Logo.png" style="height: 40px;">
+            <h2 style="margin-left: 5px;">Growth</h2>
+        </div>
+        <button onclick="GotToOtherPage('../../index.html')">Home</button>
+        <button>Manage</button>
+        <button>Settings</button>
+        <p>Autor: Jose Loo</p>
+    </div>
+    <div class="Main-Cont">
+        <header>
+            <button class="Nav-Btn" onclick="NavAnimation()"><img src="../../Imgs/nav.png" alt="" style="width: 100%;"></i></button>
+        </header>
+        <div style="width: 100%;">
+            <h1 style="margin-left: 5%;" id = 'Course-Title'>Courses</h2>
+        </div>
+        <div class="Container" id="Cont">
+            <div class="Topic-Cont">
+                <div class="Topic">
+                    Topic
+                </div>
+                <div class="Topic Red-Review">
+                    2024/9/4
+                </div>
+                <div class="Topic Adder">
+                    2024/9/4
+                    <div>
+                        <button class="R"></button>
+                        <button class="Y"></button>
+                        <button class="G"></button>
+                    </div>
+                </div>
+            </div>
+            <button class="Btn-Add" onclick="AddNewTopic()">+</button>
+        </div>
+    </div>
+
+    <script src="../../Nav.js"></script>
+    <script src="GrowthGrid.js"></script>
+</body>
+</html>

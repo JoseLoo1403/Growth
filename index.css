@@ -1,0 +1,215 @@
+body{
+    background-color: white;
+    font-family: Roboto;
+    display: flex;
+    margin: 0;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+header{
+    background-color: white;
+    display: flex;
+    justify-content: left;
+
+    border-bottom: solid;
+    border-color: #DBDBDB;
+    border-width: 2px;
+}
+
+header button{
+    background-color: transparent;
+    width: 40px;
+    border-style: none;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.logo-container{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.logo-container h2{
+    font-size: 25px;
+}
+
+.Main-Cont{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+
+.Nav{
+    width: 240px;
+    height: auto;
+    overflow: none;
+    background-color: #F8F8F8;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border-right: solid;
+    border-color: #DBDBDB;
+    border-width: 2px;
+
+    transition: 1s;
+}
+
+.Close{
+    transform: translate(-200px);
+    transition: 1s;
+    width: 0%;
+}
+
+.Nav button{
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #787486;
+    cursor: pointer;
+    
+    padding: 5px;
+}
+
+.Nav button:hover{
+    background-color: #dadada;
+    transition: 0.5s;
+}
+
+.Nav p{
+    margin-top: auto;
+    margin-left: 10px;
+    color: #787486;
+    font-size: 12px;
+    text-align: center;
+}
+
+.Container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: start;
+    background-color: #F5F5F5;
+    width: 95%;
+    height: auto;
+    margin: 2%;
+    border-radius: 20px;
+}
+
+.Sub{
+    background-color: #fff;
+    width: 300px;
+    height: 150px;
+    margin: 1%;
+    display: flex;
+    flex-direction: column;
+
+    border-style: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+    padding-left: 10px;
+
+    animation: fadeIn 1s;
+}
+
+.Sub h2{
+    font-size: 1.5rem;
+    color: black;
+    text-align: left;
+
+    margin: 0;
+}
+
+.Sub div{
+    margin-top: 20px;
+    width: 100px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.Sub input{
+    background-color: transparent;
+    color: black;
+    margin-top: 5%;
+    font-size: 1.5rem;
+    border-style: none;
+    outline: none;
+    text-align: center;
+}
+
+/* .Sub .Inpu-Desc{
+    font-size: 1rem;
+} */
+
+.Green-Review{
+    background-color: #7ac55591;
+    color: #83BF4F;
+}
+
+.Grey-Review{
+    background-color: #e0e0e0;
+    color: #625F6D;
+}
+
+.Create-Btn{
+    width: 30px;
+    height: 30px;
+    margin: 2%;
+    margin-left: auto;
+
+    font-size: 1.5rem;
+    text-align: center;
+    color: #787486;
+    background-color: transparent;
+    border: solid;
+    border-color: #787486;
+    border-radius: 5px;
+    order: 2;
+    
+
+    cursor: pointer;
+
+    animation: SmoothMove 2s;
+}
+
+.Create-Btn:hover{
+    color: #aaa9ad;
+    border-color: #aaa9ad;
+    transition: 0.5s;
+}
+
+.Info-Container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-bottom: solid;
+    border-color: #E0E0E0;
+}
+
+.Info-Container h2{
+    font-size: 14px;
+    margin-left: 10px;
+    cursor: auto;
+}
+
+#Course-Amount{
+    padding: 15px;
+    border-radius: 100px;
+    color: #625F6D;
+    background-color: #E0E0E0;
+}

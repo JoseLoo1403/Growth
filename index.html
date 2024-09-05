@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>hello</title>
+</head>
+<body>
+    <div class="Nav" id="Nav">
+        <div class="Logo-Container">
+            <img src="./Imgs/Logo.png" style="height: 40px;">
+            <h2 style="margin-left: 5px;">Growth</h2>
+        </div>
+        <button>Home</button>
+        <button>Manage</button>
+        <button>Settings</button>
+
+        <p>Autor: Jose Loo</p>
+    </div>
+    <div class="Main-Cont">
+        <header>
+            <button class="Nav-Btn" onclick="NavAnimation()"><img src="Imgs/nav.png" alt="" style="width: 100%;"></i></button>
+        </header>
+        <div style="width: 100%;">
+            <h1 style="margin-left: 5%;">Courses</h2>
+        </div>
+        <div class="Container" id="Cont"> 
+            <div class="Info-Container">
+                <h2>Amount of courses</h2>
+                <h2 id="Course-Amount">0</h2>
+                <button class="Create-Btn" id="BtnAdd" onclick="">+</button>
+            </div>
+            <div class="sub">
+                <div class="Grey-Review">
+                    2024/9/4
+                </div>
+                <h2>Class name</h2>
+                <p>Description of the course</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="Nav.js"></script>
+    <script src="index.js" type="module"></script>
+</body>
+</html>

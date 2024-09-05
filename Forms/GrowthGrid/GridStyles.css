@@ -1,0 +1,102 @@
+.Topic-Cont{
+    /* border: solid; */
+
+    border-bottom: solid;
+    border-color: #6f6e6e65;
+    border-width: 2px;
+    margin: 10px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+
+.Topic{
+    background-color: white;
+    height: 80px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    font-size: 18px;
+    border-radius: 15px;
+}
+
+.Topic input{
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    outline: none;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.Green-Review{
+    background-color: #45bc43a2;
+    color: #03A400;
+}
+
+.Red-Review{
+    background-color: #ff020294;
+    color: #AC0202;
+}
+
+.Yellow-Review{
+    background-color: #f6c934c6;
+    color: #A97900;
+}
+
+.Btn-Add{
+    background-color: transparent;
+    height: 80px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    font-size: 28px;
+    border-radius: 15px;
+    order: 2;
+
+    border: solid;
+    color: #DBDBDB;
+    border-color: #DBDBDB;
+
+    transition: 0.5s;
+
+    cursor: pointer;
+}
+
+.Btn-Add:hover{
+    border-color: #6f6e6e;
+    color: #6f6e6e;
+    border-radius: 20px;
+
+    transition: 0.5s;
+}
+
+.Adder{
+    flex-direction: column;
+}
+
+.Adder button{
+    width: 15px;
+    height: 15px;
+    border-radius: 20px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.Adder .R{
+    background-color: #FF0202;
+}
+
+.Adder .Y{
+    background-color: #F7B406;
+}
+
+.Adder .G{
+    background-color: #05ED00;
+}

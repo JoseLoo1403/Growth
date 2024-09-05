@@ -1,0 +1,111 @@
+body{
+    background-color: white;
+    font-family: Roboto;
+    display: flex;
+    margin: 0;
+    min-height: 100%;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+header{
+    background-color: white;
+    display: flex;
+    justify-content: left;
+
+    border-bottom: solid;
+    border-color: #DBDBDB;
+    border-width: 2px;
+}
+
+header button{
+    background-color: transparent;
+    width: 40px;
+    border-style: none;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.Logo-Container{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.Logo-container h2{
+    font-size: 25px;
+}
+
+.Main-Cont{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+
+.Nav{
+    width: 240px;
+    height: auto;
+    overflow: none;
+    background-color: #F8F8F8;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border-right: solid;
+    border-color: #DBDBDB;
+    border-width: 2px;
+
+    transition: 1s;
+}
+
+.Close{
+    transform: translate(-200px);
+    transition: 1s;
+    width: 0%;
+}
+
+.Nav button{
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #787486;
+    cursor: pointer;
+    
+    padding: 5px;
+}
+
+.Nav p{
+    margin-top: auto;
+    margin-left: 10px;
+    color: #787486;
+    font-size: 12px;
+    text-align: center;
+}
+
+.Nav button:hover{
+    background-color: #dadada;
+    transition: 0.5s;
+}
+
+.Container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: start;
+    background-color: #F5F5F5;
+    width: 95%;
+    min-height: 580px;
+    /* height: auto; */
+    margin: 2%;
+    border-radius: 20px;
+    overflow: scroll;
+}
