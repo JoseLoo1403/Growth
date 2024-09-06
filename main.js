@@ -15,8 +15,6 @@ ipcMain.handle('GET', async (event, sqlQuery) => {
 });
 
 ipcMain.on("UPDATE", (e,Query) => {
-  console.warn('Insert query is being executed');
-  console.log(`QUERY BEING EXECUTED: ${Query}`)
   Db.run(Query);
 })
 

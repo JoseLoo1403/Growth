@@ -35,6 +35,10 @@ async function LoadData()
 
         Cont.appendChild(MainSub);
     });
+
+    const TotalRender = document.getElementById('Course-Amount');
+
+    TotalRender.innerText = rows.length;
 }
 
 document.addEventListener("keydown",(e) =>
@@ -87,6 +91,13 @@ document.addEventListener("keydown",(e) =>
 
 function SubjectClicked(Subject)
 {
+    const sub = document.getElementById('New');
+
+    if(sub)
+    {
+        return;
+    }
+
     localStorage.setItem('Current-Subject',Subject.children[1].innerText);
     window.location.href = './Forms/GrowthGrid/GrowthGrid.html';
 }
