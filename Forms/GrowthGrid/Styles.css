@@ -1,9 +1,16 @@
+html,body{
+
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+}
+
 body{
     background-color: white;
     font-family: Roboto;
     display: flex;
     margin: 0;
-    min-height: 100%;
+    overflow-x: scroll;
 }
 
 @keyframes fadeIn {
@@ -50,6 +57,8 @@ header button{
     width: 100%;
     height: auto;
     margin: 0;
+
+    overflow: hidden;
 }
 
 .Nav{
@@ -97,15 +106,12 @@ header button{
 }
 
 .Container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: start;
     background-color: #F5F5F5;
-    width: 95%;
-    min-height: 580px;
-    /* height: auto; */
+    width: auto;
+    height: auto;
     margin: 2%;
     border-radius: 20px;
-    overflow: scroll;
+
+    display: inline-flex;
+    flex-direction: column;
 }

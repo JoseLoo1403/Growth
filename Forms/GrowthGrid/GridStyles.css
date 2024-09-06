@@ -1,26 +1,27 @@
 .Topic-Cont{
-    /* border: solid; */
-
     border-bottom: solid;
     border-color: #6f6e6e65;
     border-width: 2px;
-    margin: 10px;
-    width: 100%;
     height: auto;
-    display: flex;
     align-items: center;
+
+    display: inline-flex;
+    min-width: 400px;
 }
 
 .Topic{
     background-color: white;
     height: 80px;
     width: 120px;
+    min-width: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px;
     font-size: 18px;
     border-radius: 15px;
+
+    margin: 15px;
+    margin-right: 5px;
 }
 
 .Topic input{
@@ -78,6 +79,8 @@
 
 .Adder{
     flex-direction: column;
+    order: 2;
+    margin-right: 15px;
 }
 
 .Adder button{
@@ -87,6 +90,11 @@
     margin-top: 10px;
     border: none;
     cursor: pointer;
+}
+
+.Adder button:hover{
+    border: solid;
+    border-width: 1px;
 }
 
 .Adder .R{
@@ -99,4 +107,10 @@
 
 .Adder .G{
     background-color: #05ED00;
+}
+
+.wrapper{
+    height: 100%;
+    max-width: 100%;
+    overflow: scroll;
 }

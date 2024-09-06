@@ -69,7 +69,7 @@ ipcRenderer.on('GET-RESPOND', (e,rows) => {
     let date = new Date().toJSON().slice(0, 10);
     rows.forEach(element => {
         const MainSub = document.createElement('div');
-        MainSub.classList.add('Sub');
+        MainSub.classList.add('sub');
         MainSub.onclick = function(){SubjectClicked(this)};
 
         const SubReview = document.createElement('div');
@@ -103,7 +103,7 @@ function CreateNewCourse()
     AddNewCourseName = 1;
     const NewCard = document.createElement('div');
 
-    NewCard.classList.add('Sub');
+    NewCard.classList.add('sub');
     NewCard.id = 'New';
     NewCard.onclick = function(){SubjectClicked(this)};
 

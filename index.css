@@ -1,3 +1,10 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+
 body{
     background-color: white;
     font-family: Roboto;
@@ -28,7 +35,7 @@ header button{
     margin: 10px;
 }
 
-.logo-container{
+.Logo-Container{
     height: 50px;
     width: 100%;
     display: flex;
@@ -39,7 +46,7 @@ header button{
     margin-bottom: 30px;
 }
 
-.logo-container h2{
+.Logo-Container h2{
     font-size: 25px;
 }
 
@@ -47,7 +54,7 @@ header button{
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: auto;
+    height: 100%;
     margin: 0;
 }
 
@@ -102,12 +109,13 @@ header button{
     align-content: start;
     background-color: #F5F5F5;
     width: 95%;
+    min-height: 85%;
     height: auto;
     margin: 2%;
     border-radius: 20px;
 }
 
-.Sub{
+.sub{
     background-color: #fff;
     width: 300px;
     height: 150px;
@@ -124,7 +132,7 @@ header button{
     animation: fadeIn 1s;
 }
 
-.Sub h2{
+.sub h2{
     font-size: 1.5rem;
     color: black;
     text-align: left;
@@ -132,7 +140,7 @@ header button{
     margin: 0;
 }
 
-.Sub div{
+.sub div{
     margin-top: 20px;
     width: 100px;
     text-align: center;
@@ -140,7 +148,7 @@ header button{
     margin-bottom: 10px;
 }
 
-.Sub input{
+.sub input{
     background-color: transparent;
     color: black;
     margin-top: 5%;
@@ -212,4 +220,11 @@ header button{
     border-radius: 100px;
     color: #625F6D;
     background-color: #E0E0E0;
+}
+
+.wrapper{
+    height: 100%;
+    width: 100%;
+
+    overflow: scroll;
 }
