@@ -6,8 +6,9 @@ export function CreateSubject(Subject)
     console.log(`Subject ${Subject.Name} created`);
 }
 
-export function GetAllSubjects()
+export async function GetAllSubjects()
 {
     console.log('Getting subjects');
-    ipcRenderer.send("GET",`SELECT * FROM Subjects`);
+    const rows = await ipcRenderer.invoke('GET',`SELECT * FROM Subjects`);
+    return rows;
 }

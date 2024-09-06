@@ -1,3 +1,5 @@
+import { CreateTopic } from "../../Data/TopicContext.js";
+//const { CreateTopic } = require("../../Data/TopicContext.js");
 const Container = document.getElementById('Cont');
 
 // let AddNewTopic = 0;
@@ -40,6 +42,8 @@ document.addEventListener("keydown",(e) => {
 
             TopicContainer.appendChild(ReviewAdder);
             TopicContainer.id = '';
+
+            CreateTopic(Topic.innerText,localStorage.getItem('Current-Subject'));
         }
     }
 
@@ -63,8 +67,10 @@ function AddNewTopic()
 
     Container.appendChild(TopicContainer);
 
-    // alert('Hello');
+    InputBox.focus();
 }
+
+window.AddNewTopic = AddNewTopic;
 
 function AddNewReview(btn)
 {
@@ -88,6 +94,8 @@ function AddNewReview(btn)
 
     TopicContainer.appendChild(Review);
 }
+
+window.AddNewReview = AddNewReview;
 
 function elementFromHtml(html){
     const template = document.createElement('template');

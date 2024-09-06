@@ -6,23 +6,17 @@ let Db;
 
 let GlobalWin;
 
-ipcMain.on("GET",(event,Query) => {
-  console.warn('Query is being executed');
-  
-  Db.serialize(() => {
-    Db.all(Query, [], (err, rows) => {
-      if (err) {
-        console.error('Error executing SELECT query:', err.message);
-        return;
-      }
-      //Sending respond
-      GlobalWin.webContents.send('GET-RESPOND',rows);
-    });
+ipcMain.handle('GET', async (event, sqlQuery) => {
+  return new Promise(res => {
+      Db.all(sqlQuery, (err, rows) => {
+        res(rows);
+      });
   });
-})
+});
 
 ipcMain.on("UPDATE", (e,Query) => {
   console.warn('Insert query is being executed');
+  console.log(`QUERY BEING EXECUTED: ${Query}`)
   Db.run(Query);
 })
 

@@ -8,7 +8,34 @@ const BtnAdd = document.getElementById('BtnAdd');
 let AddNewCourseName = 0;
 let AddNewCourseDesc = 0;
 
-GetAllSubjects();
+LoadData();
+
+async function LoadData()
+{
+    const rows = await GetAllSubjects();
+    let date = new Date().toJSON().slice(0, 10);
+    rows.forEach(element => {
+        const MainSub = document.createElement('div');
+        MainSub.classList.add('sub');
+        MainSub.onclick = function(){SubjectClicked(this)};
+
+        const SubReview = document.createElement('div');
+        SubReview.innerText = date;
+        SubReview.classList.add('Green-Review');
+
+        const SubName = document.createElement('h2');
+        SubName.innerText = element.Name;
+
+        const SubDescription = document.createElement('p');
+        SubDescription.innerText = 'This is a test description';
+        
+        MainSub.appendChild(SubReview);
+        MainSub.appendChild(SubName);
+        MainSub.append(SubDescription);
+
+        Cont.appendChild(MainSub);
+    });
+}
 
 document.addEventListener("keydown",(e) =>
 {
@@ -65,31 +92,10 @@ function SubjectClicked(Subject)
 }
 
 //Recieve all subjects
-ipcRenderer.on('GET-RESPOND', (e,rows) => {
-    let date = new Date().toJSON().slice(0, 10);
-    rows.forEach(element => {
-        const MainSub = document.createElement('div');
-        MainSub.classList.add('sub');
-        MainSub.onclick = function(){SubjectClicked(this)};
+// ipcRenderer.on('GET-RESPOND', (e,rows) => {
 
-        const SubReview = document.createElement('div');
-        SubReview.innerText = date;
-        SubReview.classList.add('Green-Review');
-
-        const SubName = document.createElement('h2');
-        SubName.innerText = element.Name;
-
-        const SubDescription = document.createElement('p');
-        SubDescription.innerText = 'This is a test description';
-        
-        MainSub.appendChild(SubReview);
-        MainSub.appendChild(SubName);
-        MainSub.append(SubDescription);
-
-        Cont.appendChild(MainSub);
-
-    });
-});
+//     });
+// });
 
 function CreateNewCourse()
 { 
