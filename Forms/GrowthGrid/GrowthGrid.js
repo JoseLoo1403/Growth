@@ -47,10 +47,18 @@ async function LoadData()
         const Reviews = await GetReviewsByTopicId(element.Id);
 
         Reviews.forEach(r => {
-            const Review = document.createElement('div');
-            Review.classList.add('Topic');
-            Review.classList.add(`${r.Color}-Review`);
-            Review.innerHTML = r.Date;
+            const Review = elementFromHtml(`
+                <div class="Topic ${r.Color}-Review">
+                    <p>${r.Date}</p>
+                    <div class="Edition">
+                        <button><img src="../../Imgs/Trash-${r.Color}.png" alt=""></button>
+                        <button><img src="../../Imgs/Pencil-${r.Color}.png" alt=""></button>
+                    </div>
+                </div>
+                `);
+            // Review.classList.add('Topic');
+            // Review.classList.add(`${r.Color}-Review`);
+            // Review.innerHTML = r.Date;
 
             TopicContainer.appendChild(Review);
         });
@@ -59,6 +67,11 @@ async function LoadData()
         Container.appendChild(TopicContainer);
 
     });
+}
+
+function DeleteReview()
+{
+    
 }
 
 document.addEventListener("keydown",(e) => {
