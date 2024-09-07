@@ -9,3 +9,13 @@ export async function GetReviewsByTopicId(TopicId) {
 
     return result;
 }
+
+export function DeleteReviewById(Id)
+{
+    ipcRenderer.send('UPDATE',`DELETE FROM Review WHERE Id = ${Id}`);
+    console.log(`${Id} deleted from database`);
+}
+
+export async function GetLastReviewId() {
+    return await ipcRenderer.invoke('GET',"SELECT * FROM sqlite_sequence WHERE name = 'Review'")
+}

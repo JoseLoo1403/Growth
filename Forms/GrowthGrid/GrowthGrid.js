@@ -1,5 +1,5 @@
 import { CreateTopic,GetAllTopicsBySubjectName,GetLastTopicId } from "../../Data/TopicContext.js";
-import {CreateReview,GetReviewsByTopicId} from '../../Data/ReviewContext.js'
+import {CreateReview,GetReviewsByTopicId,DeleteReviewById,GetLastReviewId} from '../../Data/ReviewContext.js'
 const Container = document.getElementById('Cont');
 var utc = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 
@@ -22,6 +22,8 @@ async function LoadData()
 
     //Get Topics
     const rows = await GetAllTopicsBySubjectName(localStorage.getItem('Current-Subject'));
+
+    rows.sort(compare);
 
     rows.forEach(async element => {
         const TopicContainer = document.createElement('div');
@@ -51,7 +53,7 @@ async function LoadData()
                 <div class="Topic ${r.Color}-Review">
                     <p>${r.Date}</p>
                     <div class="Edition">
-                        <button><img src="../../Imgs/Trash-${r.Color}.png" alt=""></button>
+                        <button onclick="DeleteReview(this,${r.Id})"><img src="../../Imgs/Trash-${r.Color}.png" alt=""></button>
                         <button><img src="../../Imgs/Pencil-${r.Color}.png" alt=""></button>
                     </div>
                 </div>
@@ -69,10 +71,26 @@ async function LoadData()
     });
 }
 
-function DeleteReview()
+function compare( a, b ) {
+    if ( a.Id < b.Id ){
+      return -1;
+    }
+    if ( a.Id > b.Id ){
+      return 1;
+    }
+    return 0;
+  }
+
+function DeleteReview(btn,ReviewId)
 {
-    
+    const Review = btn.parentElement.parentElement;
+
+    Review.parentElement.removeChild(Review);
+
+    DeleteReviewById(ReviewId);
 }
+
+window.DeleteReview = DeleteReview;
 
 document.addEventListener("keydown",(e) => {
     if(e.key == 'Enter')
@@ -139,32 +157,40 @@ function AddNewTopic()
 
 window.AddNewTopic = AddNewTopic;
 
-function AddNewReview(btn,TopicId)
+async function AddNewReview(btn,TopicId)
 {
-    const Review = document.createElement('div');
-    Review.classList.add('Topic');
-    Review.innerHTML = utc;
     let color;
-    
+
     switch(btn.classList[0])
     {
         case 'R':
             color = 'Red';
-            Review.classList.add('Red-Review');
             break;
         case 'Y':
             color = 'Yellow';
-            Review.classList.add('Yellow-Review');
             break;
         case 'G':
             color = 'Green';
-            Review.classList.add('Green-Review');
             break;
     }
 
+    CreateReview(utc,color,TopicId);
+
     const TopicContainer = btn.parentElement.parentElement.parentElement;
 
-    CreateReview(utc,color,TopicId);
+    const Id = await GetLastReviewId();
+
+    console.log(color);
+
+    const Review = elementFromHtml(`
+            <div class="Topic ${color}-Review">
+                <p>${utc}</p>
+                <div class="Edition">
+                    <button onclick="DeleteReview(this,${Id[0].seq})"><img src="../../Imgs/Trash-${color}.png" alt=""></button>
+                    <button><img src="../../Imgs/Pencil-${color}.png" alt=""></button>
+                </div>
+            </div>
+        `)
 
     TopicContainer.appendChild(Review);
 }
