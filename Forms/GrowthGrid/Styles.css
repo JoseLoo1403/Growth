@@ -18,7 +18,7 @@ body{
     100% { opacity: 1; }
 }
 
-header{
+/* header{
     background-color: white;
     display: flex;
     justify-content: left;
@@ -34,6 +34,11 @@ header button{
     border-style: none;
     cursor: pointer;
     margin: 10px;
+} */
+
+.Nav-Btn{
+    width: 30px;
+    height: 30px;
 }
 
 .Logo-Container{
@@ -72,13 +77,14 @@ header button{
     border-right: solid;
     border-color: #DBDBDB;
     border-width: 2px;
+}
 
+.Nav-Transition{
     transition: 1s;
 }
 
 .Close{
     transform: translate(-200px);
-    transition: 1s;
     width: 0%;
 }
 

@@ -10,8 +10,23 @@ let AddNewCourseDesc = 0;
 
 LoadData();
 
+function SetNavbar()
+{
+    const Navbar = document.getElementById('Nav');
+    if(localStorage.getItem('Nav-State') == 'Open')
+    {
+        Navbar.classList.remove('Close');
+    }
+
+    setTimeout(() => {
+        Navbar.classList.add('Nav-Transition');
+        console.log('Nav animation')
+    }, 10);
+}
+
 async function LoadData()
 {
+    SetNavbar();
     const rows = await GetAllSubjects();
     let date = new Date().toJSON().slice(0, 10);
     rows.forEach(element => {
@@ -101,12 +116,6 @@ function SubjectClicked(Subject)
     localStorage.setItem('Current-Subject',Subject.children[1].innerText);
     window.location.href = './Forms/GrowthGrid/GrowthGrid.html';
 }
-
-//Recieve all subjects
-// ipcRenderer.on('GET-RESPOND', (e,rows) => {
-
-//     });
-// });
 
 function CreateNewCourse()
 { 

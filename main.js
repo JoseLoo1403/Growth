@@ -18,12 +18,34 @@ ipcMain.on("UPDATE", (e,Query) => {
   Db.run(Query);
 })
 
+ipcMain.on("TITLE-BAR",(e,Option) =>{
+  switch(Option){
+    case 'Close':
+      app.quit();
+      break;
+    case 'Minimize':
+      GlobalWin.minimize();
+      break;
+    case 'Max':
+      if(GlobalWin.isMaximized())
+      {
+        GlobalWin.unmaximize();
+      }
+      else
+      {
+        GlobalWin.maximize();
+      }
+      break;
+  }
+});
+
 
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

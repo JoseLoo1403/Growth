@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="TitleBar.css">
     <title>hello</title>
 </head>
 <body>
-    <div class="Nav" id="Nav">
+    <div class="Nav Close" id="Nav">
         <div class="Logo-Container">
             <img src="./Imgs/Logo.png" style="height: 40px;">
             <h2 style="margin-left: 5px;">Growth</h2>
@@ -21,6 +22,9 @@
     <div class="Main-Cont">
         <header>
             <button class="Nav-Btn" onclick="NavAnimation()"><img src="Imgs/nav.png" alt="" style="width: 100%;"></i></button>
+            <button class="right Normal" onclick="Minimize()"><img src="./Imgs/Title-Bar/Mini.png" alt=""></button>
+            <button class="Normal" onclick="MaxWin()"><img src="./Imgs/Title-Bar/Max.png" alt=""></button>
+            <button class="Close-Btn" onclick="CloseApp()"><img src="./Imgs/Title-Bar/X.png" alt=""></button>
         </header>
         <div style="width: 100%;">
             <h1 style="margin-left: 5%;">Courses</h2>

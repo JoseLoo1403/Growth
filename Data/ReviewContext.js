@@ -17,5 +17,5 @@ export function DeleteReviewById(Id)
 }
 
 export async function GetLastReviewId() {
-    return await ipcRenderer.invoke('GET',"SELECT * FROM sqlite_sequence WHERE name = 'Review'")
+    return await ipcRenderer.invoke('GET',"SELECT * FROM sqlite_sequence WHERE name = 'Review'");
 }

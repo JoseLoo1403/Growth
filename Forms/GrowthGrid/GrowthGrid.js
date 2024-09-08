@@ -16,8 +16,23 @@ function SetSubjectInfo()
     Title.innerText = SubjectName;
 }
 
+function SetNavbar()
+{
+    const Navbar = document.getElementById('Nav');
+    if(localStorage.getItem('Nav-State') == 'Open')
+    {
+        Navbar.classList.remove('Close');
+    }
+
+    setTimeout(() => {
+        Navbar.classList.add('Nav-Transition');
+        console.log('Nav animation')
+    }, 10);
+}
+
 async function LoadData()
 {
+    SetNavbar();
     SetSubjectInfo();
 
     //Get Topics

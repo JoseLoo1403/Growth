@@ -1,0 +1,38 @@
+header{
+    background-color: white;
+    display: flex;
+    align-items: center;
+
+    border-bottom: solid;
+    border-color: #DBDBDB;
+    border-width: 2px;
+
+    -webkit-app-region: drag;
+}
+
+header button{
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    border-style: none;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+    margin-left: 10px;
+}
+
+.Normal img, .Close-Btn img{
+    height: 20px;
+    margin-top: 10px;
+}
+
+.Normal:hover{
+    background-color: #DBDBDB;
+}
+
+.Close-Btn:hover{
+    background-color: #ff4d4d;
+}
+
+.right{
+    margin-left: auto;
+}
