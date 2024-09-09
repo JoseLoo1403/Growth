@@ -1,7 +1,9 @@
 import { CreateTopic,GetAllTopicsBySubjectName,GetLastTopicId } from "../../Data/TopicContext.js";
 import {CreateReview,GetReviewsByTopicId,DeleteReviewById,GetLastReviewId} from '../../Data/ReviewContext.js'
+import {UpdateLastReviewByTopicId} from '../../Data/SubjectContext.js'
 const Container = document.getElementById('Cont');
 var utc = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+let SubjectName;
 
 // let AddNewTopic = 0;
 
@@ -9,7 +11,7 @@ await LoadData();
 
 function SetSubjectInfo()
 {
-    let SubjectName = localStorage.getItem('Current-Subject');
+    SubjectName = localStorage.getItem('Current-Subject');
     
     const Title = document.getElementById('Course-Title');
 
@@ -26,7 +28,6 @@ function SetNavbar()
 
     setTimeout(() => {
         Navbar.classList.add('Nav-Transition');
-        console.log('Nav animation')
     }, 10);
 }
 
@@ -121,7 +122,6 @@ async function FinishNewTopic() {
 
             const TopicContainer = document.getElementById('New-Tcontainer');
 
-            
             const TopicInputBox = document.getElementById('Temp');
 
             await CreateTopic(TopicInputBox.value,localStorage.getItem('Current-Subject'));
@@ -191,11 +191,15 @@ async function AddNewReview(btn,TopicId)
 
     CreateReview(utc,color,TopicId);
 
+    if(sessionStorage.getItem(`LastReview-${SubjectName}`) == null)
+    {
+        sessionStorage.setItem(`LastReview-${SubjectName}`,'1');
+        UpdateLastReviewByTopicId(utc,TopicId);
+    }
+
     const TopicContainer = btn.parentElement.parentElement.parentElement;
 
     const Id = await GetLastReviewId();
-
-    console.log(color);
 
     const Review = elementFromHtml(`
             <div class="Topic ${color}-Review">
@@ -208,6 +212,7 @@ async function AddNewReview(btn,TopicId)
         `)
 
     TopicContainer.appendChild(Review);
+    localStorage.setItem('LastReview',SubjectName);
 }
 
 window.AddNewReview = AddNewReview;

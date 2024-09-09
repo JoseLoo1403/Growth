@@ -12,3 +12,9 @@ export async function GetAllSubjects()
     const rows = await ipcRenderer.invoke('GET',`SELECT * FROM Subjects`);
     return rows;
 }
+
+export function UpdateLastReviewByTopicId(Date,TopicId)
+{
+    console.log('LAST REVIEW UPDATED');
+    ipcRenderer.send('UPDATE',`UPDATE Subjects SET LastReview = '${Date}' WHERE Id = (SELECT Subject_Id FROM Topic WHERE Topic.Id = ${TopicId})`);
+}

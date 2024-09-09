@@ -28,25 +28,34 @@ async function LoadData()
 {
     SetNavbar();
     const rows = await GetAllSubjects();
-    let date = new Date().toJSON().slice(0, 10);
     rows.forEach(element => {
-        const MainSub = document.createElement('div');
-        MainSub.classList.add('sub');
-        MainSub.onclick = function(){SubjectClicked(this)};
 
-        const SubReview = document.createElement('div');
-        SubReview.innerText = date;
-        SubReview.classList.add('Green-Review');
+        let Color = 'Green';
 
-        const SubName = document.createElement('h2');
-        SubName.innerText = element.Name;
+        if(element.LastReview == null)
+        {
+            Color = 'Grey'
 
-        const SubDescription = document.createElement('p');
-        SubDescription.innerText = 'This is a test description';
-        
-        MainSub.appendChild(SubReview);
-        MainSub.appendChild(SubName);
-        MainSub.append(SubDescription);
+            element.LastReview = new Date().toJSON().slice(0, 10);
+        }
+
+        const MainSub = elementFromHtml(`
+            <div class="sub" onclick="SubjectClicked(this)">
+                    <div class="${Color}-Review">
+                        ${element.LastReview}
+                    </div>
+                    <h2>
+                        ${element.Name}
+                    </h2>
+                    <p>
+                        ${element.Description}
+                    </p>
+                    <div class="Topic-Info">
+                        ${element.TotalTopics} Topics
+                        <img src="./Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
+                    </div>
+                </div>
+            `);
 
         Cont.appendChild(MainSub);
     });
@@ -92,6 +101,13 @@ document.addEventListener("keydown",(e) =>
             Card.appendChild(Description);
             Card.removeChild(T);
 
+            Card.appendChild(elementFromHtml(`
+                <div class="Topic-Info">
+                        0 Topics
+                        <img src="./Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
+                    </div>
+                `));
+
             let NewSubject = {};
             console.log(Card.children[1]);
             NewSubject.Name = Card.children[1].textContent;
@@ -116,6 +132,8 @@ function SubjectClicked(Subject)
     localStorage.setItem('Current-Subject',Subject.children[1].innerText);
     window.location.href = './Forms/GrowthGrid/GrowthGrid.html';
 }
+
+window.SubjectClicked = SubjectClicked;
 
 function CreateNewCourse()
 { 
@@ -151,3 +169,11 @@ function CreateNewCourse()
 }
 
 BtnAdd.addEventListener('click',CreateNewCourse);
+
+function elementFromHtml(html){
+    const template = document.createElement('template');
+
+    template.innerHTML = html.trim();
+
+    return template.content.firstElementChild;
+}
