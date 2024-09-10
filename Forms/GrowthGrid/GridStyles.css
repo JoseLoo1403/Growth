@@ -122,6 +122,34 @@
     transition: 0.5s;
 }
 
+.Exam-Btn{
+    width: 30px;
+    height: 30px;
+    margin-left: 25px;
+    background-color: transparent;
+    color: #DBDBDB;
+    border: solid;
+    border-color: #DBDBDB;
+    border-radius: 10px;
+    font-size: 18px;
+    text-align: left;
+    padding-top: 3px;
+    
+    display: flex;
+
+    overflow: hidden;
+    cursor: pointer;
+
+    transition: 0.5s;
+}
+
+.Exam-Btn:hover{
+    width: 120px;
+    border-color: #6f6e6e;
+    color: #6f6e6e;
+    transition: 0.5s;
+}
+
 .Adder{
     flex-direction: column;
     order: 2;

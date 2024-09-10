@@ -1,6 +1,7 @@
 import { CreateTopic,GetAllTopicsBySubjectName,GetLastTopicId } from "../../Data/TopicContext.js";
 import {CreateReview,GetReviewsByTopicId,DeleteReviewById,GetLastReviewId} from '../../Data/ReviewContext.js'
-import {UpdateLastReviewByTopicId} from '../../Data/SubjectContext.js'
+import {UpdateLastReviewByTopicId,GetSubjectByName} from '../../Data/SubjectContext.js'
+import { CreateNewExam,GetExamById } from "../../Data/ExamContext.js";
 const Container = document.getElementById('Cont');
 var utc = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 let SubjectName;
@@ -12,7 +13,7 @@ await LoadData();
 function SetSubjectInfo()
 {
     SubjectName = localStorage.getItem('Current-Subject');
-    
+        
     const Title = document.getElementById('Course-Title');
 
     Title.innerText = SubjectName;
@@ -31,13 +32,53 @@ function SetNavbar()
     }, 10);
 }
 
+async function LoadExamData()
+{
+    const result = await GetSubjectByName(SubjectName);
+
+    console.log(result.Id);
+
+    const cont = document.getElementById('Top-Cont');
+
+    if(result.Exam_Id != null)
+    {
+        const exam = await GetExamById(result.Exam_Id);
+
+        console.log(exam);
+
+        let Today = new Date();
+        let ExamDate = new Date(exam.Date);
+
+
+        let Difference = Math.floor((ExamDate - Today) / (1000 * 60 * 60 * 24));
+
+        console.log(Today);
+
+        cont.appendChild(elementFromHtml(`
+            <div class="ExamBackground">
+                <div>
+                    Days until exam: 
+                    <p class="Green-Review">${Difference}</p>
+                </div>
+            </div>
+            `));
+    }
+    else
+    {
+        cont.appendChild(elementFromHtml(`
+            <button class="Exam-Btn" onclick="AddExam()">+ Add exam</button>
+            `));
+    }
+}
+
 async function LoadData()
 {
     SetNavbar();
     SetSubjectInfo();
+    LoadExamData();
 
     //Get Topics
-    const rows = await GetAllTopicsBySubjectName(localStorage.getItem('Current-Subject'));
+    const rows = await GetAllTopicsBySubjectName(SubjectName);
 
     rows.sort(compare);
 
@@ -216,6 +257,48 @@ async function AddNewReview(btn,TopicId)
 }
 
 window.AddNewReview = AddNewReview;
+
+function AddExam()
+{
+    const body = Container.parentElement.parentElement.parentElement;
+
+    body.appendChild(elementFromHtml(`
+        <div class="Cover-Screen">
+            <div class="Exam-Cont">
+                <h3>Add exam to this course</h3>
+                <input type="date" id="Exam-Date">
+                <textarea name="" id="Exam-Description" placeholder="Exam Description"></textarea>
+                <div style="display: flex;">
+                    <button onclick="CloseAddExam(this)">Cancel</button>
+                    <button onclick="BtnAddExam()">Add</button>
+                </div>
+            </div>
+        </div>
+        `));
+}
+
+window.AddExam =AddExam;
+
+function CloseAddExam(from){
+    const body = Container.parentElement.parentElement.parentElement;
+    body.removeChild(from.parentElement.parentElement.parentElement);
+}
+
+window.CloseAddExam = CloseAddExam;
+
+function BtnAddExam()
+{
+    const Description = document.getElementById('Exam-Description');
+    const Date = document.getElementById('Exam-Date');
+
+    console.log(Date.value);
+    console.log(Description.value);
+
+    CreateNewExam(Description.value,Date.value,SubjectName);
+    location.reload();
+}
+
+window.BtnAddExam = BtnAddExam;
 
 function elementFromHtml(html){
     const template = document.createElement('template');
