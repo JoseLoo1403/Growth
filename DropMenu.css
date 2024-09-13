@@ -1,0 +1,61 @@
+
+.Subject-Container .Dropdown-Menu{
+    background-color: transparent;
+    /* margin-left: auto; */    
+    width: 100%;
+    height: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.Subject-Container .Dropdown-Menu .Drop{
+    background-color: transparent;
+    height: 25px;
+    width: 25px;
+    margin-right: 5px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+
+.Subject-Container .Dropdown-Menu .Content{
+    position: absolute;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: auto;
+    margin-top: 0px;
+    z-index: 1;
+    border-radius: 10px;
+    background-color: #d9d9d98e;
+    overflow: hidden;
+    transform: translateY(20px) translateX(30px);
+}
+
+.Show-Content{
+    display: flex;
+
+    animation: fadeIn 0.5s;
+}
+
+.Hide-Content{
+    display: none;
+}
+
+.Subject-Container .Dropdown-Menu .Content button{
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #787486;
+    font-size: 1rem;
+}
+
+.Subject-Container .Dropdown-Menu .Content button:hover{
+    background-color: #d9d9d9;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

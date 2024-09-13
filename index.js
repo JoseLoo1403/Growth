@@ -40,8 +40,16 @@ async function LoadData()
         }
 
         const MainSub = elementFromHtml(`
-            <div class="sub" onclick="SubjectClicked(this)">
-                    <div class="${Color}-Review">
+            <div class="Subject-Container">
+                <div class="Dropdown-Menu">
+                    <button class="Drop" onclick="OptionsBtn(this)"><img src="./Imgs/ThreeDots.png" style="height: 20px;"></button>
+                    <div class="Content Hide-Content">
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </div>
+                <div class="sub" onclick="SubjectClicked(this)">
+                    <div class="Green-Review">
                         ${element.LastReview}
                     </div>
                     <h2>
@@ -55,6 +63,7 @@ async function LoadData()
                         <img src="./Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
                     </div>
                 </div>
+            </div>
             `);
 
         Cont.appendChild(MainSub);
