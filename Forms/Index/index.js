@@ -1,5 +1,5 @@
 //import Main from 'electron/main';
-import {CreateSubject, GetAllSubjects} from './Data/SubjectContext.js';
+import {CreateSubject, GetAllSubjects} from '../../Data/SubjectContext.js';
 const {ipcRenderer} = require('electron');
 
 const Cont = document.getElementById('Cont');
@@ -42,7 +42,7 @@ async function LoadData()
         const MainSub = elementFromHtml(`
             <div class="Subject-Container">
                 <div class="Dropdown-Menu">
-                    <button class="Drop" onclick="OptionsBtn(this)"><img src="./Imgs/ThreeDots.png" style="height: 20px;"></button>
+                    <button class="Drop" onclick="OptionsBtn(this)"><img src="../.././Imgs/ThreeDots.png" style="height: 20px;"></button>
                     <div class="Content Hide-Content">
                         <button>Edit</button>
                         <button>Delete</button>
@@ -60,7 +60,7 @@ async function LoadData()
                     </p>
                     <div class="Topic-Info">
                         ${element.TotalTopics} Topics
-                        <img src="./Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
+                        <img src="../../Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@ document.addEventListener("keydown",(e) =>
             Card.appendChild(elementFromHtml(`
                 <div class="Topic-Info">
                         0 Topics
-                        <img src="./Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
+                        <img src="../../Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
                     </div>
                 `));
 
@@ -139,7 +139,7 @@ function SubjectClicked(Subject)
     }
 
     localStorage.setItem('Current-Subject',Subject.children[1].innerText);
-    window.location.href = './Forms/GrowthGrid/GrowthGrid.html';
+    window.location.href = '../GrowthGrid/GrowthGrid.html';
 }
 
 window.SubjectClicked = SubjectClicked;
