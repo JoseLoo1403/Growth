@@ -19,3 +19,8 @@ export function DeleteReviewById(Id)
 export async function GetLastReviewId() {
     return await ipcRenderer.invoke('GET',"SELECT * FROM sqlite_sequence WHERE name = 'Review'");
 }
+
+export function UpdateReviewById(Id,date,color)
+{
+    ipcRenderer.send('UPDATE',`UPDATE Review SET Date = '${date}', Color = '${color}' WHERE Id = ${Id}`);
+}

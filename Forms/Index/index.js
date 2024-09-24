@@ -1,13 +1,13 @@
 //import Main from 'electron/main';
-import {CreateSubject, GetAllSubjects} from '../../Data/SubjectContext.js';
-const {ipcRenderer} = require('electron');
+import {CreateSubject, GetAllSubjects,DeleteFullSubjectById,EditSubjectById} from '../../Data/SubjectContext.js';
 
 const Cont = document.getElementById('Cont');
 const BtnAdd = document.getElementById('BtnAdd');
 
 let AddNewCourseName = 0;
-let AddNewCourseDesc = 0;
+let BlockSubj = 0;
 
+console.log('Hola');
 LoadData();
 
 function SetNavbar()
@@ -27,10 +27,9 @@ function SetNavbar()
 async function LoadData()
 {
     SetNavbar();
-    const rows = await GetAllSubjects();
+    const rows = await GetAllSubjects();    
+    let Color;
     rows.forEach(element => {
-
-        let Color = 'Green';
 
         if(element.LastReview == null)
         {
@@ -38,18 +37,40 @@ async function LoadData()
 
             element.LastReview = new Date().toJSON().slice(0, 10);
         }
+        else
+        {
+            let Today = new Date();
+            let LastReview = new Date(element.LastReview);
+
+            let Difference = Math.floor((Today-LastReview) / (1000 * 60 * 60 * 24));
+
+            console.log(Difference);
+
+            if(Difference >= 11)
+            {
+                Color = 'Red';
+            }
+            else if (Difference >= 5)
+            {
+                Color = 'Yellow';
+            }
+            else
+            {
+                Color = 'Green';
+            }
+        }
 
         const MainSub = elementFromHtml(`
             <div class="Subject-Container">
                 <div class="Dropdown-Menu">
                     <button class="Drop" onclick="OptionsBtn(this)"><img src="../.././Imgs/ThreeDots.png" style="height: 20px;"></button>
                     <div class="Content Hide-Content">
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <button onclick="EditBtn(this,${element.Id})">Edit</button>
+                        <button onclick="DisplayDeleteForm(${element.Id})">Delete</button>
                     </div>
                 </div>
                 <div class="sub" onclick="SubjectClicked(this)">
-                    <div class="Green-Review">
+                    <div class="${Color}-Review">
                         ${element.LastReview}
                     </div>
                     <h2>
@@ -84,7 +105,7 @@ document.addEventListener("keydown",(e) =>
 
             const ClassName = document.createElement('h2');
             ClassName.innerText = T.value;
-            T.value = '';
+            T.value = "";
             T.placeholder = 'Description';
 
             AddNewCourseName = 2;
@@ -133,7 +154,7 @@ function SubjectClicked(Subject)
 {
     const sub = document.getElementById('New');
 
-    if(sub)
+    if(sub || BlockSubj)
     {
         return;
     }
@@ -153,31 +174,114 @@ function CreateNewCourse()
         return;
     }
 
+    const NewSub = elementFromHtml(`
+        <div class="Subject-Container">
+            <div class="Dropdown-Menu">
+                <button class="Drop" onclick="OptionsBtn(this)"><img src="../.././Imgs/ThreeDots.png" style="height: 20px;"></button>
+                <div class="Content Hide-Content">
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </div>
+            </div>
+            <div class="sub" onclick="SubjectClicked(this)" id="New">
+                <div class="Grey-Review">
+                    ${date}
+                </div>
+                <input type="text" id="Temp" placeholder="Name" type="text">
+            </div>
+        </div>
+        `);
+
     AddNewCourseName = 1;
-    const NewCard = document.createElement('div');
 
-    NewCard.classList.add('sub');
-    NewCard.id = 'New';
-    NewCard.onclick = function(){SubjectClicked(this)};
+    const TxtInput = NewSub.children[1].children[1];
 
-    const SubReview = document.createElement('div');
-    SubReview.innerText = date;
-    SubReview.classList.add('Grey-Review');
+    Cont.appendChild(NewSub);
 
-    let TextInput = document.createElement('input');
-    TextInput.id = 'Temp'
-    TextInput.placeholder = 'Name';
-    TextInput.type = 'text';
-
-    NewCard.appendChild(SubReview);
-    NewCard.appendChild(TextInput);
-
-    Cont.appendChild(NewCard);
-
-    TextInput.focus();
+    TxtInput.focus();
 }
 
-BtnAdd.addEventListener('click',CreateNewCourse);
+window.CreateNewCourse = CreateNewCourse;
+
+//BtnAdd.addEventListener('click',CreateNewCourse);
+
+function DisplayDeleteForm(Subjectid)
+{
+    console.log('Hello world');
+    const form = elementFromHtml(`
+    <div class="Delete-Back">
+        <div class="Delete-Form">
+            <p>Are you sure you want to delete this course?</p>
+            <div>
+                <button class="Btn-Cancel" onclick="BtnCancel(this)">Cancel</button>
+                <button class="Btn-Del" onclick="ConfirmDelete(${Subjectid}),this">Delete</button>
+            </div>
+        </div>
+    </div>
+        `);
+
+    document.body.appendChild(form);
+}
+
+window.DisplayDeleteForm = DisplayDeleteForm;
+
+function ConfirmDelete(SubjectId,btn)
+{
+    DeleteFullSubjectById(SubjectId);
+    console.log('Subject eliminated succesfully');
+    //document.body.removeChild(btn.parentElement.parentElement.parentElement);
+    location.reload();
+}
+
+window.ConfirmDelete = ConfirmDelete;
+
+function EditBtn(btn,id)
+{
+    const MainSub = btn.parentElement.parentElement.parentElement;
+    BlockSubj = 1;
+
+    const Subject = MainSub.children[1];
+
+    const OldText = Subject.children[1];
+
+    const NewText = document.createElement('input');
+    NewText.id = 'New-Name';
+    NewText.value = OldText.innerText;
+    Subject.replaceChild(NewText,OldText);
+    NewText.focus();
+
+    NewText.addEventListener('keypress', (e) => {
+        if(e.code == 'Enter')
+        {
+            OldText.innerText = NewText.value;
+            Subject.replaceChild(OldText,NewText);
+            EditDescription(Subject,NewText.value,id);
+        }
+    });
+}
+
+window.EditBtn = EditBtn;
+
+function EditDescription(Subject,NewName,id)
+{
+    const OldText = Subject.children[2];
+
+    const NewText = document.createElement('input');
+    NewText.id = 'New-Name';
+    Subject.replaceChild(NewText,OldText);
+    NewText.value = OldText.innerText.trim();
+    NewText.focus();
+
+    NewText.addEventListener('keypress', (e) => {
+        if(e.code == 'Enter')
+        {
+            OldText.innerText = NewText.value;
+            Subject.replaceChild(OldText,NewText);
+            EditSubjectById(id,NewName,NewText.value);
+            BlockSubj = 0;
+        }
+    });
+}
 
 function elementFromHtml(html){
     const template = document.createElement('template');

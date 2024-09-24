@@ -194,6 +194,16 @@ header button{
     color: #83BF4F;
 }
 
+.Red-Review{
+    background-color: #ff020283;
+    color: #AC0202;
+}
+
+.Yellow-Review{
+    background-color: #f6c9349c;
+    color: #A97900;
+}
+
 .Grey-Review{
     background-color: #e0e0e0;
     color: #625F6D;

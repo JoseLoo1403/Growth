@@ -8,6 +8,6 @@ export function CreateNewExam(Description, Date, SubjectName) {
 
 export async function GetExamById(Id)
 {
-    const rows = ipcRenderer.invoke('GET',`SELECT * FROM Exam WHERE Id = ${Id}`);
+    const rows = await ipcRenderer.invoke('GET',`SELECT * FROM Exam WHERE Id = ${Id}`);
     return rows[0];
 }

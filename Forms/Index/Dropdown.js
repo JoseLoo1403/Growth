@@ -2,7 +2,14 @@ let Content;
 
 function OptionsBtn(e)
 {
-    //const Content = e.parent.querySelector('.Content');
+
+    if(Content != null)
+    {
+        Content.classList.add('Hide-Content');
+        Content.classList.remove('Show-Content');
+        Content = null;
+    }
+
     Content = e.parentElement.querySelector('.Content');
     
     if(Content.classList.contains('Hide-Content'))
@@ -10,19 +17,25 @@ function OptionsBtn(e)
         Content.classList.remove('Hide-Content');
         Content.classList.add('Show-Content');
     }
-    else
-    {
-        Content.classList.add('Hide-Content');
-        Content.classList.remove('Show-Content');
-    }
 
     e.addEventListener("focusout",FocusClose);
 }
 
 function FocusClose()
 {
-    Content.classList.add('Hide-Content');
-    Content.classList.remove('Show-Content');
+    setTimeout(() => {
+        Content.classList.add('Hide-Content');
+        Content.classList.remove('Show-Content');
+        Content = null;
+    },100)
 }
 
 window.OptionsBtn = OptionsBtn;
+
+
+function BtnCancel(btn)
+{
+    document.body.removeChild(btn.parentElement.parentElement.parentElement);
+}
+
+window.BtnCancel = BtnCancel;

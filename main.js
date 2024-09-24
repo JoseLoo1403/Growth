@@ -77,4 +77,3 @@ app.on('window-all-closed', function () {
   DisconnectDatabase(Db);
   if (process.platform !== 'darwin') app.quit()
 })
-
