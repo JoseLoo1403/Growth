@@ -88,3 +88,52 @@
     border-radius: 8px;
     margin-left: 10px;
 }
+
+.Delete-Form{
+    background-color: white;
+    height: 140px;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 10px;
+
+    margin-left: 40%;
+    margin-top: 20%;
+}
+
+.Delete-Form p{
+    text-align: center;
+    margin-top: 10%;
+}
+
+.Delete-Form button{
+    font-size: 1rem;
+}
+
+.Delete-Form .Btn-Del{
+    background-color: #cf141477;
+    color: #CF1414;
+    border: none;
+    border-color: #CF1414;
+    border-radius: 10px;
+    border-width: 2px;
+
+    height: 30px;
+    width: 80px;
+    cursor: pointer;
+}
+
+.Delete-Form .Btn-Cancel{
+    background-color: #E0E0E0;
+    color: #625F6D;
+    border: none;
+    border-color: #625F6D;
+    border-radius: 10px;
+    border-width: 2px;
+
+    height: 30px;
+    width: 80px;
+    cursor: pointer;
+}

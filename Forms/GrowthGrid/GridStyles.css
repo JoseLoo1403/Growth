@@ -93,6 +93,15 @@
     color: #A97900;
 }
 
+.Grey-Review{
+    background-color: #dbdbdbab;
+    color: #99AAB5;
+    width: 140px;
+    box-shadow: 3px 3px 5px #6f6e6e;
+
+    transition: 0.5s;
+}
+
 .Btn-Add{
     background-color: transparent;
     height: 80px;
@@ -153,7 +162,7 @@
 .Adder{
     flex-direction: column;
     order: 2;
-    margin-right: 15px;
+    /* margin-right: 15px; */
     font-size: 16px;
 
     opacity: 50%;
@@ -164,7 +173,7 @@
     transition: 0.7s;
 }
 
-.Adder button{
+.Edit button, .Adder button{
     width: 15px;
     height: 15px;
     border-radius: 20px;
@@ -178,15 +187,15 @@
     border-width: 1px;
 }
 
-.Adder .R{
+.Edit .R, .Adder .R{
     background-color: #FF0202;
 }
 
-.Adder .Y{
+.Edit .Y, .Adder .Y{
     background-color: #F7B406;
 }
 
-.Adder .G{
+.Edit .G, .Adder .G{
     background-color: #05ED00;
 }
 

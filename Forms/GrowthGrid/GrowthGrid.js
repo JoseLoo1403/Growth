@@ -1,10 +1,11 @@
 import { CreateTopic,GetAllTopicsBySubjectName,GetLastTopicId } from "../../Data/TopicContext.js";
-import {CreateReview,GetReviewsByTopicId,DeleteReviewById,GetLastReviewId} from '../../Data/ReviewContext.js'
-import {UpdateLastReviewByTopicId,GetSubjectByName} from '../../Data/SubjectContext.js'
+import {CreateReview,GetReviewsByTopicId,DeleteReviewById,GetLastReviewId,UpdateReviewById} from '../../Data/ReviewContext.js'
+import {UpdateLastReviewByTopicId,GetSubjectByName,UpdateLastReviewById} from '../../Data/SubjectContext.js'
 import { CreateNewExam,GetExamById } from "../../Data/ExamContext.js";
 const Container = document.getElementById('Cont');
 var utc = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 let SubjectName;
+let Subject_Id;
 
 // let AddNewTopic = 0;
 
@@ -36,7 +37,7 @@ async function LoadExamData()
 {
     const result = await GetSubjectByName(SubjectName);
 
-    console.log(result.Id);
+    Subject_Id = result.Id;
 
     const cont = document.getElementById('Top-Cont');
 
@@ -51,8 +52,6 @@ async function LoadExamData()
 
 
         let Difference = Math.floor((ExamDate - Today) / (1000 * 60 * 60 * 24));
-
-        console.log(Today);
 
         cont.appendChild(elementFromHtml(`
             <div class="ExamBackground">
@@ -86,9 +85,15 @@ async function LoadData()
         const TopicContainer = document.createElement('div');
         TopicContainer.classList.add('Topic-Cont');
 
-        const Topic = document.createElement('div');
-        Topic.classList.add('Topic');
-        Topic.innerText = element.Name;
+        const Topic = elementFromHtml(`\
+            <div class="Topic">
+                <p>${element.Name}</p>
+                <div class="Edition">
+                    <button onclick="DeleteTopicForm(${element.Id})"><img src="../../Imgs/Trash-Grey.png" alt=""></button>
+                    <button onclick="BtnEditTopic(this,${element.Id})"><img src="../../Imgs/Pencil-Grey.png" alt=""></button>
+                </div>
+            </div>
+            `);
 
         const ReviewAdder = elementFromHtml(`
             <div class="Topic Adder">
@@ -111,13 +116,10 @@ async function LoadData()
                     <p>${r.Date}</p>
                     <div class="Edition">
                         <button onclick="DeleteReview(this,${r.Id})"><img src="../../Imgs/Trash-${r.Color}.png" alt=""></button>
-                        <button><img src="../../Imgs/Pencil-${r.Color}.png" alt=""></button>
+                        <button onclick="EditReview(this,${r.Id})"><img src="../../Imgs/Pencil-${r.Color}.png" alt=""></button>
                     </div>
                 </div>
                 `);
-            // Review.classList.add('Topic');
-            // Review.classList.add(`${r.Color}-Review`);
-            // Review.innerHTML = r.Date;
 
             TopicContainer.appendChild(Review);
         });
@@ -149,6 +151,61 @@ function DeleteReview(btn,ReviewId)
 
 window.DeleteReview = DeleteReview;
 
+function EditReview(btn,Id)
+{
+    const ReviewCard = btn.parentElement.parentElement;
+    
+    const Calendar = document.createElement('input');
+    Calendar.type = 'date';
+
+    const oldDate = ReviewCard.children[0];
+
+    const ColorEdit = elementFromHtml(`
+        <div class="Edit">
+            <button class="R" onclick="UpdateReview('Red',${Id},this)"></button>
+            <button class="Y" onclick="UpdateReview('Yellow',${Id},this)"></button>
+            <button class="G" onclick="UpdateReview('Green',${Id},this)"></button>
+        </div>
+        `); 
+
+    ReviewCard.classList.remove(ReviewCard.classList[1]);
+    ReviewCard.classList.add('Grey-Review');
+
+    ReviewCard.replaceChild(Calendar,oldDate);
+    ReviewCard.replaceChild(ColorEdit,ReviewCard.children[1]);
+}
+
+window.EditReview = EditReview;
+
+function UpdateReview(NewColor,Id,btn)
+{
+    const ReviewCard = btn.parentElement.parentElement;
+
+    const NewDate = ReviewCard.children[0];
+
+    const DateText = document.createElement('p');
+    DateText.innerText = NewDate.value.slice(0,10).replace(/-/g,'/');
+
+    const EditionButtons = elementFromHtml(`
+        <div class="Edition">
+            <button onclick="DeleteReview(this,${Id})"><img src="../../Imgs/Trash-${NewColor}.png" alt=""></button>
+            <button onclick="EditReview(this,${Id})"><img src="../../Imgs/Pencil-${NewColor}.png" alt=""></button>
+        </div>
+        `);
+
+    ReviewCard.innerHTML = '';
+    ReviewCard.appendChild(DateText);
+    ReviewCard.appendChild(EditionButtons);
+
+    ReviewCard.classList.remove('Grey-Review');
+    ReviewCard.classList.add(`${NewColor}-Review`);
+
+    UpdateReviewById(Id,DateText.innerText,NewColor);
+    UpdateLastReviewById(Subject_Id);
+}
+
+window.UpdateReview = UpdateReview;
+
 document.addEventListener("keydown",(e) => {
     if(e.key == 'Enter')
     {
@@ -160,7 +217,6 @@ async function FinishNewTopic() {
     const Topic = document.getElementById('New');
         if(Topic)
         {
-
             const TopicContainer = document.getElementById('New-Tcontainer');
 
             const TopicInputBox = document.getElementById('Temp');
@@ -168,7 +224,10 @@ async function FinishNewTopic() {
             await CreateTopic(TopicInputBox.value,localStorage.getItem('Current-Subject'));
 
             Topic.removeChild(TopicInputBox);
-            Topic.innerText = TopicInputBox.value;
+
+            const TxtName = document.createElement('p');
+            TxtName.innerText = TopicInputBox.value;
+            Topic.appendChild(TxtName);
             Topic.id = '';
 
             const TopicId = await GetLastTopicId();
@@ -183,7 +242,14 @@ async function FinishNewTopic() {
                         <button class="G" onclick="AddNewReview(this,${TopicId[0].seq})"></button>
                     </div>
                 </div>
-                `);
+            `);
+            
+            Topic.appendChild(elementFromHtml(`
+                <div class="Edition">
+                    <button onclick="DeleteTopicForm(${TopicId[0].seq})"><img src="../../Imgs/Trash-Grey.png" alt=""></button>
+                    <button onclick="BtnEditTopic(this,${TopicId[0].seq})"><img src="../../Imgs/Pencil-Grey.png" alt=""></button>
+                </div>
+                `));
 
             TopicContainer.appendChild(ReviewAdder);
             TopicContainer.id = '';

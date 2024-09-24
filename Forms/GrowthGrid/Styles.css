@@ -10,31 +10,13 @@ body{
     font-family: Roboto;
     display: flex;
     margin: 0;
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
 }
 
 @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
-
-/* header{
-    background-color: white;
-    display: flex;
-    justify-content: left;
-
-    border-bottom: solid;
-    border-color: #DBDBDB;
-    border-width: 2px;
-}
-
-header button{
-    background-color: transparent;
-    width: 40px;
-    border-style: none;
-    cursor: pointer;
-    margin: 10px;
-} */
 
 .Nav-Btn{
     width: 30px;
