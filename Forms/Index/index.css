@@ -133,6 +133,7 @@ header button{
 
     padding-left: 10px;
     overflow-y: hidden;
+    transition: 0.3s;
 }
 
 .sub{

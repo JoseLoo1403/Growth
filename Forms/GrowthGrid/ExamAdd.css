@@ -18,10 +18,11 @@
     align-items: center;
 }
 
-.Exam-Cont input{
+.Exam-Cont textarea{
     width: 200px;
     font-size: 16px;
     margin-bottom: 10px;
+    max-width: 300px;
 }
 
 #Exam-Description{
@@ -59,7 +60,9 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .ExamBackground div{
@@ -67,10 +70,14 @@
     background-color: white;
     width: auto;
     padding: 0px 10px 0px 10px;
-    height: 40px;
+    height: 35px;
     align-items: center;
     margin-left: 10px;
     border-radius: 10px;
+}
+
+.ExamBackground:hover {
+    box-shadow: #6f6e6e 2px 2px 2px;
 }
 
 .ExamBackground div p{
@@ -79,6 +86,9 @@
     padding: 5px;
     text-align: center;
     border-radius: 8px;
+    background-color: #45bc43a2;
+    color: #03A400;
+    resize: none;
 }
 
 .Date{

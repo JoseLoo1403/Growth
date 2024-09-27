@@ -23,10 +23,11 @@ export async function GetLastTopicId() {
     return await ipcRenderer.invoke('GET',`SELECT * FROM sqlite_sequence where name = 'Topic'`);
 }
 
-export function DeleteTopicById(TopicId)
+export function DeleteTopicById(TopicId,SubjectId)
 {
     ipcRenderer.send('UPDATE',`DELETE FROM Review WHERE Topic_Id = ${TopicId}`);
-    ipcRenderer.send('UPDATE',`DELETE FROM Topic WHERE Id = ${TopicId}`)
+    ipcRenderer.send('UPDATE',`DELETE FROM Topic WHERE Id = ${TopicId}`);
+    ipcRenderer.send('UPDATE',`UPDATE Subjects SET TotalTopics = (SELECT TotalTopics FROM Subjects WHERE Id = ${SubjectId}) - 1 WHERE Id = ${SubjectId}`);
 }
 
 export function UpdateTopicById(NewName,Id)

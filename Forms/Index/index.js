@@ -1,5 +1,5 @@
 //import Main from 'electron/main';
-import {CreateSubject, GetAllSubjects,DeleteFullSubjectById,EditSubjectById} from '../../Data/SubjectContext.js';
+import {CreateSubject, GetAllSubjects,DeleteFullSubjectById,EditSubjectById,GetLastSubjectId} from '../../Data/SubjectContext.js';
 
 const Cont = document.getElementById('Cont');
 const BtnAdd = document.getElementById('BtnAdd');
@@ -7,7 +7,6 @@ const BtnAdd = document.getElementById('BtnAdd');
 let AddNewCourseName = 0;
 let BlockSubj = 0;
 
-console.log('Hola');
 LoadData();
 
 function SetNavbar()
@@ -20,7 +19,6 @@ function SetNavbar()
 
     setTimeout(() => {
         Navbar.classList.add('Nav-Transition');
-        console.log('Nav animation')
     }, 10);
 }
 
@@ -43,8 +41,6 @@ async function LoadData()
             let LastReview = new Date(element.LastReview);
 
             let Difference = Math.floor((Today-LastReview) / (1000 * 60 * 60 * 24));
-
-            console.log(Difference);
 
             if(Difference >= 11)
             {
@@ -95,60 +91,60 @@ async function LoadData()
     TotalRender.innerText = rows.length;
 }
 
-document.addEventListener("keydown",(e) =>
-{
-    if(AddNewCourseName == 1)
-    {
-        if(e.key == 'Enter')
-        {
-            const T = document.getElementById('Temp');
+// document.addEventListener("keydown",(e) =>
+// {
+//     if(AddNewCourseName == 1)
+//     {
+//         if(e.key == 'Enter')
+//         {
+//             const T = document.getElementById('Temp');
 
-            const ClassName = document.createElement('h2');
-            ClassName.innerText = T.value;
-            T.value = "";
-            T.placeholder = 'Description';
+//             const ClassName = document.createElement('h2');
+//             ClassName.innerText = T.value;
+//             T.value = "";
+//             T.placeholder = 'Description';
 
-            AddNewCourseName = 2;
-            const Card = document.getElementById('New');
-            Card.appendChild(ClassName);
-            Card.removeChild(T);
-            Card.appendChild(T);
+//             AddNewCourseName = 2;
+//             const Card = document.getElementById('New');
+//             Card.appendChild(ClassName);
+//             Card.removeChild(T);
+//             Card.appendChild(T);
 
-            T.focus();
-        }
-    }
-    else if (AddNewCourseName == 2)
-    {
-        if(e.key == 'Enter')
-        {
-            const T = document.getElementById('Temp');
+//             T.focus();
+//         }
+//     }
+//     else if (AddNewCourseName == 2)
+//     {
+//         if(e.key == 'Enter')
+//         {
+//             const T = document.getElementById('Temp');
 
-            const Description = document.createElement('p');
-            Description.innerText = T.value;
+//             const Description = document.createElement('p');
+//             Description.innerText = T.value;
 
-            const Card = document.getElementById('New');
-            Card.id = '';
-            Card.appendChild(Description);
-            Card.removeChild(T);
+//             const Card = document.getElementById('New');
+//             Card.id = '';
+//             Card.appendChild(Description);
+//             Card.removeChild(T);
 
-            Card.appendChild(elementFromHtml(`
-                <div class="Topic-Info">
-                        0 Topics
-                        <img src="../../Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
-                    </div>
-                `));
+//             Card.appendChild(elementFromHtml(`
+//                 <div class="Topic-Info">
+//                         0 Topics
+//                         <img src="../../Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
+//                     </div>
+//                 `));
 
-            let NewSubject = {};
-            console.log(Card.children[1]);
-            NewSubject.Name = Card.children[1].textContent;
-            NewSubject.Description = Card.children[2].textContent;
+//             let NewSubject = {};
+//             console.log(Card.children[1]);
+//             NewSubject.Name = Card.children[1].textContent;
+//             NewSubject.Description = Card.children[2].textContent;
 
-            CreateSubject(NewSubject);
+//             CreateSubject(NewSubject);
 
-            AddNewCourseName = 0;
-        }
-    }
-});
+//             AddNewCourseName = 0;
+//         }
+//     }
+// });
 
 function SubjectClicked(Subject)
 {
@@ -187,7 +183,7 @@ function CreateNewCourse()
                 <div class="Grey-Review">
                     ${date}
                 </div>
-                <input type="text" id="Temp" placeholder="Name" type="text">
+                <input type="text" id="Temp" placeholder="Name" type="text" maxlength="22">
             </div>
         </div>
         `);
@@ -199,15 +195,85 @@ function CreateNewCourse()
     Cont.appendChild(NewSub);
 
     TxtInput.focus();
+
+    const BlurHandler = function() {
+        NewSub.remove();
+    };
+
+    TxtInput.addEventListener('blur',BlurHandler);
+
+    TxtInput.addEventListener('keypress', (e) => {
+        if(e.key == 'Enter')
+        {
+            if(TxtInput.value.trim().length == 0)
+            {
+                return;
+            }
+            TxtInput.removeEventListener('blur',BlurHandler);
+            CreateCourseTitle(TxtInput);
+        }
+    });
 }
 
 window.CreateNewCourse = CreateNewCourse;
 
-//BtnAdd.addEventListener('click',CreateNewCourse);
+function CreateCourseTitle(TxtInput)
+{
+    let Subject = {};
+    const CourseName = document.createElement('h2');
+    CourseName.innerText = TxtInput.value;
+
+    Subject.Name = TxtInput.value;
+
+    const Sub = TxtInput.parentElement;
+
+    Sub.replaceChild(CourseName,TxtInput);
+    TxtInput.remove();
+
+    const TxtInput2 = document.createElement('input');
+    TxtInput2.maxLength = 50;
+    Sub.appendChild(TxtInput2);
+
+    TxtInput2.focus();
+
+    TxtInput2.addEventListener('keypress', (e) => {
+        if(e.key == 'Enter')
+        {
+            const Description = document.createElement('p');
+            Description.innerText = TxtInput2.value;
+            Subject.Description = Description.innerText;
+
+            const TopicInfo = elementFromHtml(`
+                <div class="Topic-Info">
+                    0 Topics
+                    <img src="../../Imgs/FolderIcon.png" style="height: 16px; margin-right: 5px;">
+                </div>
+            `);
+
+            Sub.replaceChild(Description,TxtInput2);
+            Sub.appendChild(TopicInfo);
+            TxtInput2.remove();
+            Sub.id = '';
+
+            CreateSubject(Subject);
+            AddFunctionalitiesToButtons(Sub)
+        }
+    });
+}
+
+async function AddFunctionalitiesToButtons(Sub)
+{
+    const ButtonsContainer = Sub.parentElement.children[0].children[1];
+    const LastSubject = await GetLastSubjectId();
+
+    console.log(ButtonsContainer.children[0])
+
+    ButtonsContainer.children[0].onclick = function() {EditBtn(this,LastSubject[0].seq)};
+    ButtonsContainer.children[1].onclick = function() {DisplayDeleteForm(LastSubject[0].seq)};
+}
 
 function DisplayDeleteForm(Subjectid)
 {
-    console.log('Hello world');
     const form = elementFromHtml(`
     <div class="Delete-Back">
         <div class="Delete-Form">
@@ -228,8 +294,6 @@ window.DisplayDeleteForm = DisplayDeleteForm;
 function ConfirmDelete(SubjectId,btn)
 {
     DeleteFullSubjectById(SubjectId);
-    console.log('Subject eliminated succesfully');
-    //document.body.removeChild(btn.parentElement.parentElement.parentElement);
     location.reload();
 }
 
@@ -247,12 +311,26 @@ function EditBtn(btn,id)
     const NewText = document.createElement('input');
     NewText.id = 'New-Name';
     NewText.value = OldText.innerText;
+    NewText.maxLength = 25;
     Subject.replaceChild(NewText,OldText);
     NewText.focus();
+
+    const BlurHandler = function() {
+        Subject.replaceChild(OldText,NewText);
+        BlockSubj = 0;
+    };
+
+    NewText.addEventListener('blur',BlurHandler);
 
     NewText.addEventListener('keypress', (e) => {
         if(e.code == 'Enter')
         {
+            if(NewText.value.trim().length == 0)
+            {
+                return;
+            }
+            
+            NewText.removeEventListener('blur',BlurHandler);
             OldText.innerText = NewText.value;
             Subject.replaceChild(OldText,NewText);
             EditDescription(Subject,NewText.value,id);
@@ -271,10 +349,19 @@ function EditDescription(Subject,NewName,id)
     Subject.replaceChild(NewText,OldText);
     NewText.value = OldText.innerText.trim();
     NewText.focus();
+    NewText.maxLength = 50;
+
+    const BlurHandler = function() {
+        Subject.replaceChild(OldText,NewText);
+        BlockSubj = 0;
+    };
+
+    NewText.addEventListener('blur',BlurHandler);
 
     NewText.addEventListener('keypress', (e) => {
         if(e.code == 'Enter')
         {
+            NewText.removeEventListener('blur',BlurHandler);
             OldText.innerText = NewText.value;
             Subject.replaceChild(OldText,NewText);
             EditSubjectById(id,NewName,NewText.value);

@@ -38,6 +38,7 @@ async function LoadExamData()
     const result = await GetSubjectByName(SubjectName);
 
     Subject_Id = result.Id;
+    sessionStorage.setItem('Current_Subject_Id',result.Id);
 
     const cont = document.getElementById('Top-Cont');
 
@@ -56,8 +57,9 @@ async function LoadExamData()
         cont.appendChild(elementFromHtml(`
             <div class="ExamBackground">
                 <div>
-                    Days until exam: 
-                    <p class="Green-Review">${Difference}</p>
+                    <img src="../../Imgs/Exam_Pencil.png" style="width: 22px; margin-right: 10px;">
+                    Exam in: 
+                    <p>${Difference} Days</p>
                 </div>
             </div>
             `));
@@ -147,6 +149,7 @@ function DeleteReview(btn,ReviewId)
     Review.parentElement.removeChild(Review);
 
     DeleteReviewById(ReviewId);
+    UpdateLastReviewById(Subject_Id);
 }
 
 window.DeleteReview = DeleteReview;
@@ -182,6 +185,8 @@ function UpdateReview(NewColor,Id,btn)
     const ReviewCard = btn.parentElement.parentElement;
 
     const NewDate = ReviewCard.children[0];
+
+    if(NewDate.value.trim().length == 0) {return;}
 
     const DateText = document.createElement('p');
     DateText.innerText = NewDate.value.slice(0,10).replace(/-/g,'/');
@@ -220,6 +225,8 @@ async function FinishNewTopic() {
             const TopicContainer = document.getElementById('New-Tcontainer');
 
             const TopicInputBox = document.getElementById('Temp');
+
+            if(TopicInputBox.value.trim().length == 0) return;
 
             await CreateTopic(TopicInputBox.value,localStorage.getItem('Current-Subject'));
 
@@ -298,6 +305,7 @@ async function AddNewReview(btn,TopicId)
 
     CreateReview(utc,color,TopicId);
 
+    //Last subject studied logic
     if(sessionStorage.getItem(`LastReview-${SubjectName}`) == null)
     {
         sessionStorage.setItem(`LastReview-${SubjectName}`,'1');
@@ -313,13 +321,12 @@ async function AddNewReview(btn,TopicId)
                 <p>${utc}</p>
                 <div class="Edition">
                     <button onclick="DeleteReview(this,${Id[0].seq})"><img src="../../Imgs/Trash-${color}.png" alt=""></button>
-                    <button><img src="../../Imgs/Pencil-${color}.png" alt=""></button>
+                    <button onclick="EditReview(this,${Id[0].seq})"><img src="../../Imgs/Pencil-${color}.png" alt=""></button>
                 </div>
             </div>
         `)
 
     TopicContainer.appendChild(Review);
-    localStorage.setItem('LastReview',SubjectName);
 }
 
 window.AddNewReview = AddNewReview;
@@ -356,6 +363,8 @@ function BtnAddExam()
 {
     const Description = document.getElementById('Exam-Description');
     const Date = document.getElementById('Exam-Date');
+
+    if(Date.value.trim().length == 0) {return;}
 
     console.log(Date.value);
     console.log(Description.value);

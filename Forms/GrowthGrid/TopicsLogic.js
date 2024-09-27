@@ -1,4 +1,5 @@
 import {DeleteTopicById,UpdateTopicById} from "../../Data/TopicContext.js";
+import {UpdateLastReviewById} from "../../Data/SubjectContext.js";
 
 function DeleteTopicForm(Id)
 {
@@ -13,7 +14,6 @@ function DeleteTopicForm(Id)
             </div>
         </div>
         `);
-
     document.body.appendChild(form);
 }
 
@@ -21,7 +21,7 @@ window.DeleteTopicForm = DeleteTopicForm;
 
 function BtnDeleteTopic(Id)
 {
-    DeleteTopicById(Id);
+    DeleteTopicById(Id,sessionStorage.getItem('Current_Subject_Id'));
     location.reload();
 }
 
@@ -47,17 +47,31 @@ function BtnEditTopic(btn,Id)
     const TopicCard = btn.parentElement.parentElement;
 
     const NewName = document.createElement('input');
+    const OldName = TopicCard.children[0];
 
-    TopicCard.replaceChild(NewName,TopicCard.children[0]);
+    NewName.value = OldName.innerText;
+
+    TopicCard.replaceChild(NewName,OldName);
     NewName.focus();
     
     const Buttons = TopicCard.children[1];
 
     TopicCard.removeChild(Buttons);
 
+    const BlurHandler = function() {
+        TopicCard.replaceChild(OldName,NewName);
+        TopicCard.appendChild(Buttons);
+        NewName.remove();
+    };
+
+    NewName.addEventListener('blur',BlurHandler);
+
     NewName.addEventListener("keypress", (e) => {
         if(e.key == 'Enter')
         {
+            if(NewName.value.trim().length == 0) return;
+
+            NewName.removeEventListener('blur',BlurHandler);
             EditTopic(Buttons,TopicCard,Id,NewName);
         }
     });

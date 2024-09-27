@@ -3,7 +3,6 @@ const {ipcRenderer} = require('electron');
 export function CreateSubject(Subject)
 {
     ipcRenderer.send("UPDATE",`INSERT INTO Subjects (Name, Description) VALUES ('${Subject.Name}', '${Subject.Description}')`);
-    console.log(`Subject ${Subject.Name} created`);
 }
 
 export async function GetAllSubjects()
@@ -35,8 +34,6 @@ export async function UpdateLastReviewById(SubjectId)
         }
     });
 
-    //console.log(`The highst value for the subject ${SubjectId} is ${MaxDate.toISOString().split('T')[0].replace(/-/g, '/')}`);
-
     ipcRenderer.send('UPDATE',`UPDATE Subjects SET LastReview = '${MaxDate.getFullYear()}/${(MaxDate.getMonth()+1).toString().padStart(2, '0')}/${MaxDate.getDate().toString().padStart(2, '0')}' WHERE Id = ${SubjectId}`);
 }
 
@@ -63,4 +60,8 @@ export function DeleteFullSubjectById(Id)
 
 export function EditSubjectById(Id,NewName,NewDesc){
     ipcRenderer.send('UPDATE',`UPDATE Subjects SET name = '${NewName}', Description = '${NewDesc}' WHERE Id = ${Id}`);
+}
+
+export async function GetLastSubjectId(){
+    return await ipcRenderer.invoke('GET',"SELECT * FROM sqlite_sequence WHERE name = 'Subjects'");
 }
