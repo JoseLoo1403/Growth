@@ -7,9 +7,9 @@
 
 .Exam-Cont{
     background-color: white;
-    width: 400px;
-    height: 250px;
-    margin-left: 35%;
+    width: 500px;
+    height: 350px;
+    margin: auto;
     margin-top: 10%;
     border-radius: 15px;
 
@@ -19,10 +19,13 @@
 }
 
 .Exam-Cont textarea{
-    width: 200px;
+    width: 300px;
+    min-width: 300px;
+    min-height: 200px;
     font-size: 16px;
     margin-bottom: 10px;
-    max-width: 300px;
+    margin-top: 10px;
+    max-width: 400px;
 }
 
 #Exam-Description{
@@ -63,6 +66,7 @@
     margin-bottom: 10px;
     cursor: pointer;
     transition: 0.2s;
+    padding-right: 10px;
 }
 
 .ExamBackground div{
@@ -122,7 +126,7 @@
     font-size: 1rem;
 }
 
-.Delete-Form .Btn-Del{
+.Show-Exam .Btn-Del, .Delete-Form .Btn-Del{
     background-color: #cf141477;
     color: #CF1414;
     border: none;
@@ -146,4 +150,35 @@
     height: 30px;
     width: 80px;
     cursor: pointer;
+}
+
+.Show-Exam{
+    background-color: white;
+    height: 350px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+
+    border-radius: 10px;
+
+    margin:auto;
+    margin-top: 10%;
+    overflow: auto;
+}
+
+.Show-Exam div .Exam-Close{
+    background-color: transparent;
+    display: block;
+    margin-left: auto;
+    cursor: pointer;
+    border: none;
+
+    height: 25px;
+    width: 25px;
+    border-bottom-left-radius: 5px;
+}
+
+.Show-Exam div .Exam-Close:hover{
+    background-color: #d53a3a;
 }

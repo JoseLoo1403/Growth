@@ -52,10 +52,10 @@ async function LoadExamData()
         let ExamDate = new Date(exam.Date);
 
 
-        let Difference = Math.floor((ExamDate - Today) / (1000 * 60 * 60 * 24));
+        let Difference = Math.floor((ExamDate - Today) / (1000 * 60 * 60 * 24)) + 1;
 
         cont.appendChild(elementFromHtml(`
-            <div class="ExamBackground">
+            <div class="ExamBackground" onclick="OpenExamInfo(${result.Exam_Id})">
                 <div>
                     <img src="../../Imgs/Exam_Pencil.png" style="width: 22px; margin-right: 10px;">
                     Exam in: 
@@ -365,9 +365,6 @@ function BtnAddExam()
     const Date = document.getElementById('Exam-Date');
 
     if(Date.value.trim().length == 0) {return;}
-
-    console.log(Date.value);
-    console.log(Description.value);
 
     CreateNewExam(Description.value,Date.value,SubjectName);
     location.reload();
