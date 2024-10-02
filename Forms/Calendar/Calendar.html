@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="Calendar.css">
     <link rel="stylesheet" href="../../TitleBar.css">
-    <link rel="stylesheet" href="DropMenu.css">
+    <link rel="stylesheet" href="Calendar_Obj.css">
     <title>hello</title>
 </head>
 <body>
@@ -14,8 +14,8 @@
             <img src="../../Imgs/Logo.png" style="height: 40px;">
             <h2 style="margin-left: 5px;">Growth</h2>
         </div>
-        <button>Home</button>
-        <button onclick="GotToOtherPage('../Calendar/Calendar.html')">Calendar</button>
+        <button onclick="GotToOtherPage('../index/index.html')">Home</button>
+        <button>Calendar</button>
         <button>Settings</button>
 
         <p>Author: Jose Loo</p>
@@ -28,32 +28,39 @@
             <button class="Close-Btn" onclick="CloseApp()"><img src="../../Imgs/Title-Bar/X.png" alt=""></button>
         </header>
         <div style="width: 100%;">
-            <h1 style="margin-left: 5%;">Courses</h2>
+            <h1 style="margin-left: 5%;">Calendar</h1>
         </div>
-        <div class="wrapper">
-            <div class="Container" id="Cont"> 
-                <div class="Info-Container">
-                    <h2>Total Courses: </h2>
-                    <h2 id="Course-Amount">0</h2>
-                    <button class="Create-Btn" id="BtnAdd" onclick="CreateNewCourse()">+</button>
-                </div>
-            </div>
-        </div>
+
+        <div class="calendar">
+            <header>
+              <h3></h3>
+              <div class="Info">
+                <p class="Rev">Review/Study</p>
+                <p class="Ex">Exams</p>
+              </div>
+              <nav>
+                <button id="prev"></button>
+                <button id="next"></button>
+              </nav>
+            </header>
+            <section>
+              <ul class="days">
+                <li>Sun</li>
+                <li>Mon</li>
+                <li>Tue</li>
+                <li>Wed</li>
+                <li>Thu</li>
+                <li>Fri</li>
+                <li>Sat</li>
+              </ul>
+              <ul class="dates">
+              </ul>
+            </section>
+          </div>
+
     </div>
 
-
-    <!-- <div class="Delete-Back">
-        <div class="Delete-Form">
-            <p>Are you sure you want to delete this course?</p>
-            <div>
-                <button class="Btn-Del">Delete</button>
-                <button class="Btn-Cancel" onclick="BtnCancel(this)">Cancel</button>
-            </div>
-        </div>
-    </div> -->
-
     <script src="../../Nav.js"></script>
-    <script src="index.js" type="module"></script>
-    <script src="Dropdown.js" type="module"></script>
+    <script src="Calendar.js" type="module"></script>
 </body>
 </html>

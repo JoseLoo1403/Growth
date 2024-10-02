@@ -19,3 +19,7 @@ export function DeleteExamById(Id)
     ipcRenderer.send('UPDATE',`UPDATE Subjects SET Exam_Id = NULL WHERE Exam_Id = ${Id}`);
     ipcRenderer.send('UPDATE',`DELETE FROM Exam WHERE Id = ${Id}`);
 }
+
+export async function GetDistinctExamDates() {
+    return await ipcRenderer.invoke('GET',`SELECT DISTINCT(Date) FROM Exam`);
+}

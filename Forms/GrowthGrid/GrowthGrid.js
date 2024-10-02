@@ -366,7 +366,7 @@ function BtnAddExam()
 
     if(Date.value.trim().length == 0) {return;}
 
-    CreateNewExam(Description.value,Date.value,SubjectName);
+    CreateNewExam(Description.value,Date.value.replace(/-/g,'/'),SubjectName);
     location.reload();
 }
 

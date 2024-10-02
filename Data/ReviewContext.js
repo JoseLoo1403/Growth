@@ -24,3 +24,8 @@ export function UpdateReviewById(Id,date,color)
 {
     ipcRenderer.send('UPDATE',`UPDATE Review SET Date = '${date}', Color = '${color}' WHERE Id = ${Id}`);
 }
+
+export async function GetDistinctDates()
+{
+    return await ipcRenderer.invoke('GET','SELECT DISTINCT(Date)  FROM Review');    
+}
